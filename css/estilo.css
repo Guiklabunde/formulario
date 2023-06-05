@@ -1,0 +1,58 @@
+body {
+    background: rgb(0, 0, 0);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 1) 23%, rgba(0, 179, 196, 1) 100%);
+}
+
+#formulario {
+    background: rgb(255,17,17);
+    background: linear-gradient(90deg, rgba(255,17,17,1) 0%, rgba(128,0,116,1) 100%);
+    border-radius: 30px;
+    padding: 20px;
+    width: 400px;
+    float: right;
+    margin-top: 50%;
+    margin-bottom: 15%;
+    min-height: 300px;
+}
+
+h3 {
+    color: transparent;
+    text-align: center;
+}
+
+h1 {
+    color: #FFFF;
+}
+
+#tabelaDados {
+    color: #E6E6FA;
+}
+
+.table {
+    color: #00FFFF;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.logo {
+    margin-left: 20px;
+}
+
+.logo-max-size {
+    max-height: 50px;
+}
+
+.termos {
+    padding: 10px;
+}
+
+@media (max-width: 767px) {
+    #formulario {
+        float: none;
+        margin: 0 auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}

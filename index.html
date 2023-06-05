@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Guilherme</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 d-none d-md-block align-self-center">
+                <img class="logo" src="img/logo.png">
+            </div>
+            <div id="formulario" class="col-md-4 mt-5 justify-content-end align-self-center">
+                <form class="text-purple">
+                    <div class="form-group">
+                        <label for="nome"><strong>Nome:</strong></label>
+                        <input class="form-control" type="text" id="nome" placeholder="Digite seu nome" maxlength="20" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sobrenome"><strong>Sobrenome:</strong></label>
+                        <input class="form-control" type="text" id="sobrenome" placeholder="Digite seu sobrenome" maxlength="40" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cpf"><strong>Digite seu CPF:</strong></label>
+                        <input class="form-control" type="text" id="cpf"  pattern="(\d{3}\.?\d{3}\.?\d{3}-?\d{2})|(\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2})" placeholder="000.000.000-00" maxlength="14">
+                    </div>
+                    <div class="form-group">
+                        <label for="nascimento"><strong>Data de nascimento:</strong></label>
+                        <input class="form-control" type="date" id="nascimento" placeholder="dd/mm/aaaa" maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><strong>E-mail:</strong></label>
+                        <input class="form-control" type="text" id="email" placeholder="Digite seu email" maxlength="30" required>
+                    </div>
+                    <div class="form-group form-check">
+                        <input class="form-check-input" type="checkbox" id="aceitar-termos">
+                        <label class="form-check-label" for="aceitar-termos">Aceitar termos</label>
+                        <a class="termos" href="#" onclick="exibirTermos()">Ver termos</a>
+                    </div>
+                </form>
+                <button class="btn btn-info btn-block btn-warning" type="button" id="enviarButton"><strong>Enviar</strong></button>
+            </div>
+        </div>
+    </div>
+
+    <h3>Way maker, miracle worker, promise keeper, light in the darkness, my God, that is who You are🎵</h3>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const enviarButton = document.getElementById('enviarButton');
+        const aceitarTermosCheckbox = document.getElementById('aceitar-termos');
+
+        enviarButton.addEventListener('click', function () {
+            const nome = document.getElementById('nome').value;
+            const sobrenome = document.getElementById('sobrenome').value;
+            const cpf = document.getElementById('cpf').value;
+            const nascimento = formatarData(document.getElementById('nascimento').value);
+            const email = document.getElementById('email').value;
+            const aceitouTermos = aceitarTermosCheckbox.checked;
+
+            if (nome && sobrenome && cpf && nascimento && email && aceitouTermos) {
+                const queryParams = `nome=${nome}&sobrenome=${sobrenome}&cpf=${cpf}&nascimento=${nascimento}&email=${email}`;
+                window.location.href = `dados.html?${queryParams}`;
+            } else {
+                alert('Por favor, preencha todos os campos obrigatórios antes de enviar o formulário.');
+            }
+        });
+
+        function formatarData(data) {
+            const dataObjeto = new Date(data);
+            const dia = String(dataObjeto.getDate() + 1).padStart(2, '0');
+            const mes = String(dataObjeto.getMonth() + 1).padStart(2, '0');
+            const ano = dataObjeto.getFullYear();
+            return `${dia}/${mes}/${ano}`;
+        }
+
+        function exibirTermos() {
+            const termos = "Termos a serem aceitos:\n1. Contratar: Guilherme Andrei Klabunde, como colaborador efetivo.\n2. Entender: Que este sistema é um teste-prático, e que qualquer erro no código ou em quaisquer funcionalidades do site deverão ser informados no e-mail: guiandrei17@gmail.com.\n3. Respeitar: As regras estabelecidas na LGPD e demais normas vigentes.";
+
+            alert(termos);
+        }
+    </script>
+</body>
+</html>

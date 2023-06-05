@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mt-5">
+                <a href="index.html">
+                    <img class="logo logo-max-size"  src="img/logo.png" alt="Logo">
+                </a>
+                <h1 class="text-center">Dados do formulário:</h1>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Sobrenome</th>
+                                <th>Nome completo</th>
+                                <th>CPF</th>
+                                <th>Data de nascimento</th>
+                                <th>E-mail</th>
+                                <th>Apagar dados</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaDados">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const tabelaDados = document.getElementById('tabelaDados');
+        let dadosUsuarios = JSON.parse(localStorage.getItem('dadosUsuarios')) || [];
+
+        function excluirLinha(btn) {
+            const index = btn.closest('tr').rowIndex - 1;
+            dadosUsuarios.splice(index, 1);
+            atualizarTabela();
+            atualizarArmazenamentoLocal();
+        }
+
+        function criarLinhaTabela(usuario) {
+            const { nome, sobrenome, cpf, nascimento, email } = usuario;
+            const nomeCompleto = `${nome} ${sobrenome}`;
+            const newRow = tabelaDados.insertRow();
+            newRow.innerHTML = `
+                <td>${nome}</td>
+                <td>${sobrenome}</td>
+                <td>${nomeCompleto}</td>
+                <td>${cpf}</td>
+                <td>${nascimento}</td>
+                <td>${email}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="excluirLinha(this)">Excluir</button>
+                </td>
+            `;
+        }
+
+        function atualizarTabela() {
+            tabelaDados.innerHTML = '';
+            dadosUsuarios.forEach(usuario => {
+                criarLinhaTabela(usuario);
+            });
+        }
+
+        function armazenarDados() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const nome = urlParams.get('nome');
+            const sobrenome = urlParams.get('sobrenome');
+            const cpf = urlParams.get('cpf');
+            const nascimento = urlParams.get('nascimento');
+            const email = urlParams.get('email');
+
+            const novoUsuario = { nome, sobrenome, cpf, nascimento, email };
+            dadosUsuarios.push(novoUsuario);
+            atualizarTabela();
+            atualizarArmazenamentoLocal();
+        }
+
+        function atualizarArmazenamentoLocal() {
+            localStorage.setItem('dadosUsuarios', JSON.stringify(dadosUsuarios));
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('nome') && urlParams.has('sobrenome') && urlParams.has('cpf') && urlParams.has('nascimento') && urlParams.has('email')) {
+            armazenarDados();
+        } else {
+            atualizarTabela();
+        }
+    </script>
+</body>
+</html>
